@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(__file__))
 from create_shortcut import create_shortcut
 
 game_path = os.path.join(os.path.dirname(__file__), "game", "main.py")
+icon_path = os.path.join(os.path.dirname(__file__), "..", "images", "icon.ico")
 
 def build_game(game_path):
     if not os.path.exists(game_path):
@@ -15,7 +16,7 @@ def build_game(game_path):
         print("🚀 Building game...")
         subprocess.run([
             sys.executable, "-m", "PyInstaller",
-            "--icon=../images/icon.ico",
+            f"--icon={icon_path}",
             "--name=Tic-Tac-Toe",
             "--onefile",
             "--noconsole",
