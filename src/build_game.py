@@ -4,7 +4,7 @@ import sys
 sys.path.append(os.path.dirname(__file__))
 from create_shortcut import create_shortcut
 
-game_path = "game/main.py"
+game_path = os.path.join(os.path.dirname(__file__), "game", "main.py")
 
 def build_game(game_path):
     if not os.path.exists(game_path):
