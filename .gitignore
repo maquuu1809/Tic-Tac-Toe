@@ -1,0 +1,8 @@
+# Directory
+.venv
+build
+dist
+.idea
+
+# Files
+*.spec
