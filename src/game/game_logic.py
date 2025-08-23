@@ -20,6 +20,16 @@ def restart(canvas, first_x_line, first_y_line, second_x_line, second_y_line, ca
     canvas.create_line(0, first_x_line, canvas_width, first_x_line)
     canvas.create_line(0, second_x_line, canvas_width, second_x_line)
 
+def reset_game():
+    global game, occupied
+    occupied.clear()
+    game = [""] * 9
+
+def change_team(window, main_window):
+    window.destroy()
+    reset_game()
+    main_window()
+
 def won_check(main_window, canvas, blocks, player):
     if game[0] == game[1] == game[2] != "":
         canvas.create_line(blocks["1"]["middle_point"]["x"] - 25, blocks["1"]["middle_point"]["y"],

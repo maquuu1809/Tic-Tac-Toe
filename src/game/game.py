@@ -1,7 +1,7 @@
 from tkinter import *
 from global_variables import *
 from exit_window import exit_window
-from game_logic import player_move, restart
+from game_logic import player_move, restart, change_team
 from centering_window import centering_window
 
 window_width = 700
@@ -220,6 +220,7 @@ blocks = {
 }
 
 def game(team, previous_window):
+    from main import main_window
     previous_window.destroy()
 
     window = Tk()
@@ -228,22 +229,12 @@ def game(team, previous_window):
     center_x, center_y = centering_window(window, window_width, window_height)
     window.geometry(f"{window_width}x{window_height}+{center_x}+{center_y}")
 
-    menu = Menu(window)
-    window.config(menu=menu)
-    filemenu = Menu(menu)
-    menu.add_cascade(label='File', menu=filemenu)
-    filemenu.add_command(label='New')
-    filemenu.add_command(label='Open...')
-    helpmenu = Menu(menu)
-    menu.add_cascade(label='Help', menu=helpmenu)
-    helpmenu.add_command(label='About')
-
     if team == "O":
         label = Label(window, text="Playing as O")
     else:
         label = Label(window, text="Playing as X")
     label.config(font=(font, title_font_size))
-    label.grid(column=0, row=0, columnspan=2, padx=title_x_padding, pady=title_y_padding)
+    label.grid(column=0, row=0, columnspan=3, padx=title_x_padding, pady=title_y_padding)
 
     def canvas_click_event(event):
         player_move(event, window, canvas, team, blocks, margin)
@@ -254,14 +245,18 @@ def game(team, previous_window):
     canvas.create_line(0, first_x_line, canvas_width, first_x_line)
     canvas.create_line(0, second_x_line, canvas_width, second_x_line)
     canvas.bind('<Button-1>', canvas_click_event)
-    canvas.grid(column=0, row=1, columnspan=2, padx=40, pady=10)
+    canvas.grid(column=0, row=1, columnspan=3, padx=40, pady=10)
 
     restart_button = Button(window, text="Restart", width=button_width, command=lambda: restart(canvas, first_x_line, first_y_line, second_x_line, second_y_line, canvas_width, canvas_height))
     restart_button.config(font=(font, small_button_font_size))
     restart_button.grid(column=0, row=2)
 
+    change_team_button = Button(window, text="Change team", width=button_width, command=lambda: change_team(window, main_window))
+    change_team_button.config(font=(font, small_button_font_size))
+    change_team_button.grid(column=1, row=2)
+
     exit_button = Button(window, text="Exit", width=button_width, command=lambda: exit_window(window))
     exit_button.config(font=(font, small_button_font_size))
-    exit_button.grid(column=1, row=2)
+    exit_button.grid(column=2, row=2)
 
     window.mainloop()
